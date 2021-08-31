@@ -1,0 +1,26 @@
+<h1 style="text-align: center">PROIZVODI</h1>
+<table class="table">
+    <thead style="background-color: #ff6a6a">
+    <tr>
+        <th scope="col" style="color:white">#</th>
+        <th scope="col" style="color:white">IME</th>
+        <th scope="col" style="color:white">OPIS</th>
+        <th scope="col" style="color:white">STANJE</th>
+        <th scope="col" style="color:white">CENA</th>
+    </tr>
+    </thead>
+    <tbody>
+     {% for p in proizvodi %}
+
+        <tr>
+            <th scope="row">{{p.id}}</th>
+            <td>{{p.ime}}</td>
+            <td>{{p.opis}}</td>
+            <td>{{p.stanje}}</td>
+            <td>{{p.cena}} <br>evra</td>
+        </tr>
+
+     {% endfor %}
+
+    </tbody>
+</table>

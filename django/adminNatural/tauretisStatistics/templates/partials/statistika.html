@@ -1,0 +1,19 @@
+<h1 style="text-align: center">STATISTIKA</h1>
+<table class="table">
+    <thead style="background-color: #ff6a6a">
+    <tr>
+        <th scope="col" style="color:white; text-align: center">POSMATRANO</th>
+        <th scope="col" style="color:white; text-align: center">REZULTATI MERENJA</th>
+    </tr>
+    </thead>
+    <tbody>
+     {% for p in merenja %}
+        <tr>
+            <td style="text-align: center">{{p.0}}</td>
+            <td style="text-align: center">{{p.1}}</td>
+        </tr>
+
+     {% endfor %}
+
+    </tbody>
+</table>

@@ -1,0 +1,25 @@
+<h1 style="text-align: center">FAKTURE</h1>
+<table class="table">
+    <thead style="background-color: #ff6a6a">
+    <tr>
+        <th scope="col" style="color:white">#</th>
+        <th scope="col" style="color:white">PRODATO</th>
+        <th scope="col" style="color:white">DATUM</th>
+    </tr>
+    </thead>
+    <tbody>
+     {% for p in ulepsaneFakutre %}
+
+        <tr>
+<!--            <th scope="row">{{p.id}}</th>-->
+<!--            <td>{{p.datum}}</td>-->
+<!--            <td>{{p.prodato}}</td>-->
+            <th scope="row">{{p.0}}</th>
+            <td>{{p.1}}</td>
+            <td>{{p.2}}</td>
+        </tr>
+
+     {% endfor %}
+
+    </tbody>
+</table>
