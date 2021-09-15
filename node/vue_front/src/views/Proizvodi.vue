@@ -3,16 +3,22 @@
   <div class="proizvodi">
     <h1>Proizvodi</h1>
     <div style="height: 4rem">asdasda</div>
+<!--    <div style="height: 4rem">{{proizvodi}}</div>-->
+
     <div class="tabela_proizvoda">
       <b-table
-          hover v-if="proizvodi.length"
           sticky-header="800px"
           :items="proizvodi"
           :fields="fields"
           head-variant="light"
       >
+        <template v-slot:cell(action)="row">
+          <b-button variant="danger" @click="dodajUKorpu(row.item.id)">dodaj u korpu</b-button>
+        </template>
       </b-table>
     </div>
+
+
   </div>
 </template>
 
@@ -28,23 +34,32 @@ export default {
   },
   data() {
     return {
+
       fields: [
-        { key: 'id' },
         { key: 'ime' },
         { key: 'opis' },
-        { key: 'stanje' },
         { key: 'cena' },
-      ]
+        { key: 'action'},
+
+        // { z: localStorage.getItem('user_id') },
+  ]
     }
   },
+
   methods: {
     ...mapActions(['load_proizvodi']),
-
+    dodajUKorpu: function (id){
+      const proizvod = JSON.stringify({id: id});
+      // console.log(proizvod)
+      alert(proizvod)
+    }
   },
 
   mounted: function() {
+
     this.load_proizvodi();
 
   }
 }
+
 </script>
