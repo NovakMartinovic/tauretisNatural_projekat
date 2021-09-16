@@ -88,7 +88,7 @@ export default {
       const user = JSON.stringify({username: this.new_username, password: this.new_password, is_admin: this.is_admin});
       console.log(user)
       this.new_user(user);
-
+      // alert("rerouting to login page!")
       // this.$router.push({path: `login`})
 
     }
