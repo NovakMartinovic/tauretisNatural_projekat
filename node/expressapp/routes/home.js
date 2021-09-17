@@ -21,30 +21,6 @@ const sema = Joi.object().keys({
 
 route.use(express.json());
 
-route.get('/korisnici', (req, res) => {
-    // Saljemo upit bazi
-    pool.query('select ', (err, rows) => {
-        if (err)
-            res.status(500).send(err.sqlMessage);
-        else
-            res.send(rows);
-    });
-});
-
-
-//
-// route.get('/proizvodi', (req, res) => {
-//     console.log("HOME PROIZVODI")
-//     // Saljemo upit bazi
-//     pool.query('select IME, OPIS, STANJE, CENA from tauretisstatistics_proizovdi', (err, rows) => {
-//         if (err)
-//             res.status(500).send(err.sqlMessage);
-//         else
-//             res.send(rows);
-//     });
-// });
-
-
 
 
 module.exports = route;

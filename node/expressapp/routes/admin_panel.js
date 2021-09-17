@@ -16,7 +16,7 @@ route.use(express.json());
 
 
 
-route.get('/', (req, res) => {
+route.get('/api', (req, res) => {
     console.log("ADMIN_PANEL BACKEND")
     //console.log(auth(req, res))
     pool.query('SELECT * FROM `tauretis_korisnici`', (err, rows) => {
@@ -27,7 +27,7 @@ route.get('/', (req, res) => {
             // console.log(rows)
     })
 });
-route.delete('/:id', (req, res) => {
+route.delete('/api/:id', (req, res) => {
     console.log("ADMIN_PANEL DELETE")
     let query = 'SELECT * FROM `tauretis_korisnici` WHERE id=?'
     let formated = mysql.format(query, [req.params.id])
