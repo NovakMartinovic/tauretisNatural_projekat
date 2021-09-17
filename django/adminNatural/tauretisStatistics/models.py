@@ -1,7 +1,17 @@
 from django.db import models
 import datetime
 
-# Create your models here.
+class Korisnik(models.Model):
+    id = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=32)
+    password = models.CharField(max_length=32)
+    is_admin = models.IntegerField()
+
+    def __str__(self):
+        return 'id:\t' + str(self.id) + ', username:\t' + self.username + 'password:\t' + self.password + 'is_admin:\t' + str(self.is_admin) + '\n'
+    class Meta:
+        managed = False
+        db_table = 'tauretis_korisnici'
 class Proizvod(models.Model):
     id = models.IntegerField(primary_key=True)
     ime = models.CharField(max_length=100)

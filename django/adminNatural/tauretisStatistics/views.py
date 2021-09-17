@@ -1,11 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse as hr
 # Create your views here.
-from .models import Proizvod, Faktura
+from .models import Proizvod, Faktura, Korisnik
 from django.db.models import Avg, Max, Min, Count
 from django.template import loader
 import json
-
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+import io
+import numpy as np
+import urllib, base64
 
 def index(request):
     prosekCena = Proizvod.objects.all().aggregate(Avg('cena'))['cena__avg']
@@ -32,6 +36,24 @@ def index(request):
         return sum(map(izvuciCenuFakture, sveFakture))
     def maxZaradaNaJednojFakturi():
         return max(map(izvuciCenuFakture, sveFakture))
+
+    def kreirajHistogram():
+        lista = [str(x.datum) for x in Faktura.objects.all()]
+        hist = plt.hist(sorted(lista))
+        plt.xlabel("dani prodaje", size=20)
+        plt.ylabel("broj prodaja", size=20)
+        plt.tight_layout()
+        plt.tick_params(direction = 'out', pad=6)
+        fig = plt.gcf()
+        buf = io.BytesIO()
+        fig.savefig(buf, format='png')
+        buf.seek(0)
+        string = base64.b64encode(buf.read())
+        uri1 = urllib.parse.quote(string)
+        return uri1
+
+
+
     def ulepsajFakture():
         noveFakture = []
         for f in sveFakture:
@@ -65,12 +87,26 @@ def index(request):
         },
         'proizvodi': Proizvod.objects.all(),
         'fakture': Faktura.objects.all(),
-        'ulepsaneFakutre' : ulepsajFakture(),
+        'ulepsaneFakutre': ulepsajFakture(),
+        'hist1': kreirajHistogram(),
+        'korisnici' : Korisnik.objects.all(),
     }
     # return hr(resenje)
     template = loader.get_template('tauretisStatistics/index.html')
     # return hr(template.render(context, request))
     return render(request=request, template_name='tauretisStatistics/index.html', context=context)
+
+def korisnici_view(request):
+    korisnici = Korisnik.objects.all()
+    context = {
+        'korisnici': korisnici
+    }
+    return render(request, 'korisnici.html', context)
+
+
+def delete_korisnik(req, id):
+    Korisnik.objects.get(id=id).delete()
+    return redirect('/tauretisStatistics/')
 
 
 def ucitaj_fakturu(data):
