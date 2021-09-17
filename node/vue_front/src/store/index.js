@@ -41,31 +41,8 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        check_korpa: function({ commit }, korpa) {
-            fetch(baseUrl  + `proizvodi/korpa/`, {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: korpa
-            }).then((response) => {
-                if (!response.ok)
-                    throw response;
-
-                return response.json();
-            }).then((jsonData) => {
-                commit('set_kopra', jsonData);
-            }).catch((error) => {
-                if (typeof error.text === 'function')
-                    error.text().then((errorMessage) => {
-                        alert(errorMessage);
-                    });
-                else
-                    alert(error);
-            });
-        },
         load_proizvodi: function ({ commit }) {
-            fetch(  baseUrl  + `proizvodi/`, {
+            fetch(  baseUrl  + `proizvodi/api/`, {
                 method: 'get',
                 headers:{
                     'auth': localStorage.getItem('auth')
@@ -86,7 +63,7 @@ export default new Vuex.Store({
             });
         },
         load_users: function ({ commit }) {
-            fetch(  baseUrl  + `admin_panel/`, {
+            fetch(  baseUrl  + `admin_panel/api/`, {
                 method: 'get',
                 headers:{
                     'auth': localStorage.getItem('auth')
@@ -161,7 +138,7 @@ export default new Vuex.Store({
             });
         },
         delete_user: function({ commit }, id) {
-            fetch(  baseUrl  + `admin_panel/${id}`, {
+            fetch(  baseUrl  + `admin_panel/api/${id}`, {
                 method: 'delete'
                 , headers:{
                     'auth': localStorage.getItem('auth')

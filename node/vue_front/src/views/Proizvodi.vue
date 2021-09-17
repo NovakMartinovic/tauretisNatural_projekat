@@ -56,7 +56,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['load_proizvodi','check_korpa']),
+    ...mapActions(['load_proizvodi']),
     dodajUKorpu: function (id){
       id -= 1
       // ako korpa nije inicijalizovana, inicijalizuj je
@@ -101,7 +101,9 @@ export default {
           za_slanje[p] = local_korpa[p]
         }
       }
-      this.check_korpa(za_slanje)
+      alert("od lokalne korpe se prave sql upiti i proverava se da li ima na stanju datih proizvoda, ako ima smanjujemo" +
+          "stanje za narucenu kolicinu i vracamo korisniku potvrdnu poruku, u suprotnom izbacujemo gresku")
+      console.log(za_slanje)
     }
   },
 

@@ -30,8 +30,12 @@
 <!--          <router-link to="/korpa">KORPA</router-link>-->
 <!--        </b-nav-item>-->
         <b-nav-item v-if="admin">
-          <router-link to="/admin_panel">EDIT KORISNIKE</router-link>
+          | <router-link to="/admin_panel">EDIT KORISNIKE</router-link>
         </b-nav-item>
+        <b-nav-item v-if="admin">
+          <b-link href="http://localhost:8000/tauretisStatistics/">DJANGO</b-link>|
+        </b-nav-item>
+
         <b-nav-item v-if="login">
           <b-button variant="danger" @click="goLogout()">LOGOUT {{user}}</b-button>
         </b-nav-item>
@@ -52,7 +56,8 @@
       localStorage.removeItem('user')
       localStorage.removeItem('user_id')
       localStorage.removeItem('is_admin')
-
+      this.login = false
+      this.admin = false
       this.$router.push({ path: `/login` })
     },
     jeUlogovan: function () {
