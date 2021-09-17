@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
@@ -9,6 +8,7 @@ import Kontakt from '@/views/Kontakt.vue'
 import AboutUs from '@/views/AboutUs.vue'
 import Login from '@/views/Login.vue'
 import Register from '@/views/Register.vue'
+import Admin_panel from "../views/Admin_panel";
 // import AboutUs from '@/views/AboutUs.vue'
 // import Home from '../views/Home.vue'
 
@@ -19,6 +19,11 @@ const routes = [
         path: '/',
         name: 'home',
         component: Home
+    },
+    {
+        path: '/admin_panel',
+        name: 'admin_panel',
+        component: Admin_panel
     },
     {
         path: '/aboutUs',

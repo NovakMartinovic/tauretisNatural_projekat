@@ -31,35 +31,38 @@ export default new Vuex.Store({
         add_user: function (state,user){
             state.users.push(user);
         },
-
+        delete_user: function (state,id){
+            for(let i = 0 ; i < state.users.length; i++){
+                if(state.users[i].id === parseInt(id)){
+                    state.users.splice(i,1);
+                    break;
+                }
+            }
+        },
     },
     actions: {
-        load_korpa ({ commit }, id) {
-            fetch(  baseUrl  + `korpa/${id}`, { method: 'get'
-                , headers:{
-                    'auth': localStorage.getItem('auth')
-
-                }}).then((response) => {
+        check_korpa: function({ commit }, korpa) {
+            fetch(baseUrl  + `proizvodi/korpa/`, {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: korpa
+            }).then((response) => {
                 if (!response.ok)
-                    alert(response.clone().json().title)
-                return response.json()
+                    throw response;
+
+                return response.json();
             }).then((jsonData) => {
-                commit('set_korpa', jsonData)
+                commit('set_kopra', jsonData);
             }).catch((error) => {
-                alert('a')
                 if (typeof error.text === 'function')
                     error.text().then((errorMessage) => {
-
                         alert(errorMessage);
                     });
-                else{
-                    alert('b')
+                else
                     alert(error);
-                }
-
             });
-
-
         },
         load_proizvodi: function ({ commit }) {
             fetch(  baseUrl  + `proizvodi/`, {
@@ -82,11 +85,11 @@ export default new Vuex.Store({
                     alert(error);
             });
         },
-        get_users_for_login: function ({ commit }) {
-            fetch(  baseUrl  + `user`, { method: 'get'
-                , headers:{
+        load_users: function ({ commit }) {
+            fetch(  baseUrl  + `admin_panel/`, {
+                method: 'get',
+                headers:{
                     'auth': localStorage.getItem('auth')
-
                 }}).then((response) => {
                 if (!response.ok)
                     throw response;
@@ -103,6 +106,7 @@ export default new Vuex.Store({
                     alert(error);
             });
         },
+
         new_user: function({ commit }, user) {
             fetch(baseUrl  + `auth/register/`, {
                 method: 'post',
@@ -129,7 +133,7 @@ export default new Vuex.Store({
         login_user: function ({commit}, user){
 
 
-            fetch(baseUrl + `auth/login`, {
+            fetch(baseUrl + `auth/login/`, {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
@@ -147,6 +151,23 @@ export default new Vuex.Store({
                 localStorage.setItem('user_id', jsonData.id)
                 localStorage.setItem('is_admin', jsonData.is_admin)
                 commit('set_user', jsonData)
+            }).catch((error) => {
+                if (typeof error.text === 'function')
+                    error.text().then((errorMessage) => {
+                        alert(errorMessage);
+                    });
+                else
+                    alert(error);
+            });
+        },
+        delete_user: function({ commit }, id) {
+            fetch(  baseUrl  + `admin_panel/${id}`, {
+                method: 'delete'
+                , headers:{
+                    'auth': localStorage.getItem('auth')
+
+                }}).then((jsonData) => {
+                commit('delete_user', jsonData.id)
             }).catch((error) => {
                 if (typeof error.text === 'function')
                     error.text().then((errorMessage) => {

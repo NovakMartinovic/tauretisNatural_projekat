@@ -1,7 +1,7 @@
 <template>
 
   <div class="proizvodi">
-    <h1>Proizvodi i korpa: {{cena_korpe()}} $ </h1>
+    <h3>Proizvodi i korpa: {{cena_korpe()}} $ </h3>
     <hr>
     <div style="height: 4rem">trenutna korpa: </div>
 <!--    <div style="height: 4rem; white-space: pre;">{{trenutna_korpa()}} </div>-->
@@ -56,7 +56,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['load_proizvodi']),
+    ...mapActions(['load_proizvodi','check_korpa']),
     dodajUKorpu: function (id){
       id -= 1
       // ako korpa nije inicijalizovana, inicijalizuj je
@@ -94,7 +94,14 @@ export default {
       return ispis
     },
     kupi: function (){
-      alert("Baza se pita da li ima na stanju sve iz korpe ")
+      // alert("Baza se pita da li ima na stanju sve iz korpe ")
+      let za_slanje = {}
+      for(let p in local_korpa){
+        if(local_korpa[p].kolicina){
+          za_slanje[p] = local_korpa[p]
+        }
+      }
+      this.check_korpa(za_slanje)
     }
   },
 

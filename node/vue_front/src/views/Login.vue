@@ -68,7 +68,7 @@ export default {
 
         if(localStorage.getItem('auth') != null){
 
-          window.location = '/'
+          window.location = '/proizvodi'
         }
       }, 1200)
 
